@@ -35,7 +35,7 @@ export class ListPokemonsPage {
     private loadingCtrller: LoadingController = inject(LoadingController);
     private router: Router = inject(Router);
 
-    //variable para almacenar todos los pokemons en pantalla
+
     pokemons: IPokemon[] = [];
 
     ionViewWillEnter(){
@@ -43,29 +43,29 @@ export class ListPokemonsPage {
     }
 
     async getMorePokemons(event?: any){
-        //constante para almacenar la promesa
+
         const promisePokemons = this.pokemonService.getPokemons();
 
-        if (promisePokemons) { //validando que no sea null
-            //se crea el controlador para el ion-loading
+        if (promisePokemons) { 
+
             const loading = await this.loadingCtrller.create({
                 message: 'Cargando...'
             });
 
-            loading.present(); //hace que se muestre el loading
+            loading.present(); 
 
-            //se manda llamar la promesa
+
             promisePokemons.then((pokemons: IPokemon[]) => {
-                //El nuevo arreglo de pokemons obtenidos, se
-                //concatena con el de la clase interna
-                //es decir, los que estaban, mas los nuevos
+
+
+
                 this.pokemons = this.pokemons.concat(pokemons);
             })
-            .catch((error) => console.log(error)) //Si ocurre un error
+            .catch((error) => console.log(error)) 
             .finally(() => {
-                //Bloque que se ejecuta al completar o al tener error
-                //asegura que el loading cierre
-                loading.dismiss(); //cierra el loading
+
+
+                loading.dismiss(); 
                 if (event) {
                     event.target.complete();
                 }

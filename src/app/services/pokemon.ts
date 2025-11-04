@@ -16,28 +16,21 @@ export class SPokemon {
                 .then(async (response: HttpResponse) => {
                     console.log("La respuesta es: ");
                     console.log(response);
-
-                    //declaración del tipo de dato a retornar
                     const pokemons: IPokemon[] = [];
 
-                    //Confirma si tiene el atributo data
+                   
                     if (response.data) {
-                        const result: [] = response.data.results; //almacena el arreglo de pokemons
-                        this.nextUrl = response.data.next; //almacena el url para el siguiente grupo
-                        const promises: Promise<HttpResponse>[] = []; //Se crea un arreglo de promesas
-
-                        result.forEach((result: any) => { //se itera sobre cada elemento
-                            const urlPokemon = result.url; //se almacena la url de inf. del pokemon
-                            //Se crea una promesa para cada elemento y se almacena en el arreglo de promesas
+                        const result: [] = response.data.results; 
+                        this.nextUrl = response.data.next; 
+                        const promises: Promise<HttpResponse>[] = []; 
+                        result.forEach((result: any) => { 
+                            const urlPokemon = result.url; 
                             promises.push(CapacitorHttp.get({ url: urlPokemon, params: {} }));
                         });
 
                         await Promise.all(promises).then((responses: any) => {
                             const arrayResponses: [] = responses;
-
-                            //Se itera sobre cada pokemon obtenido
                             arrayResponses.forEach((respoPokemon: any) => {
-                                //se llama a la funcion
                                 const pokemon = this.processPokemon(respoPokemon.data);
                                 pokemons.push(pokemon);
                             });

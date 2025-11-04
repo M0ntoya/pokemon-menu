@@ -17,7 +17,7 @@ import { addIcons } from 'ionicons';
 })
 export class DetailPokemonPage {
 
-  // El router vinculará automáticamente el parámetro de ruta 'id' a esta propiedad
+
   @Input() id!: string;
 
   private servicioPokemon: SPokemon = inject(SPokemon);
