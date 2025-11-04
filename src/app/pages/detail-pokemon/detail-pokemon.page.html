@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title class="text-center fw-bold">Pokémon Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="p-3">
+
+  @if (pokemon) {
+    <!-- nombre/imagen del pokemon -->
+    <ion-card class="mb-3 shadow-sm border-0 rounded-4 bg-light">
+      <ion-card-content class="text-center py-4">
+        <img [src]="pokemon.sprite" class="img-fluid mb-3" style="max-width: 160px;" />
+        <h2 class="text-capitalize fw-semibold text-primary">{{ pokemon.name }}</h2>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- tipo -->
+    <ion-card class="mb-3 shadow-sm border-0 rounded-4">
+      <ion-card-header class="border-bottom">
+        <ion-card-title class="fs-5 fw-semibold text-primary">Types</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="text-center py-3">
+        <div class="d-flex justify-content-center align-items-center gap-3">
+          <img [src]="'/assets/img/' + pokemon.type1 + '.gif'" class="img-fluid" style="width:60px; height:50px;" />
+          @if (pokemon.type2) {
+            <img [src]="'/assets/img/' + pokemon.type2 + '.gif'" class="img-fluid" style="width:60px; height:50px;" />
+          }
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- informacion -->
+    <ion-card class="mb-3 shadow-sm border-0 rounded-4">
+      <ion-card-header class="border-bottom">
+        <ion-card-title class="fs-5 fw-semibold text-primary">Physical Information</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="py-3">
+        <div class="row text-center">
+          <div class="col-6">
+            <p class="mb-1 fw-semibold">Height</p>
+            <p class="mb-0">{{ pokemon.height }} m</p>
+          </div>
+          <div class="col-6">
+            <p class="mb-1 fw-semibold">Weight</p>
+            <p class="mb-0">{{ pokemon.weight }} kg</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- habilidades -->
+    <ion-card class="mb-3 shadow-sm border-0 rounded-4">
+      <ion-card-header class="border-bottom">
+        <ion-card-title class="fs-5 fw-semibold text-primary">Abilities</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="py-3">
+        <ul class="list-group list-group-flush">
+          @for (ability of pokemon.abilities; track ability) {
+            <li class="list-group-item text-capitalize">{{ ability }}</li>
+          }
+        </ul>
+        @if (pokemon.hiddenAbility) {
+          <div class="alert alert-light mt-3 border">
+            <strong>Hidden Ability:</strong>
+            <span class="text-capitalize">{{ pokemon.hiddenAbility }}</span>
+          </div>
+        }
+      </ion-card-content>
+    </ion-card>
+
+    <!-- estadisticas -->
+    <ion-card class="shadow-sm border-0 rounded-4">
+      <ion-card-header class="border-bottom">
+        <ion-card-title class="fs-5 fw-semibold text-primary">Base Stats</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="py-3">
+        <ul class="list-group list-group-flush">
+          @for (stat of pokemon.stats; track stat) {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span class="text-capitalize fw-semibold">{{ stat.stat.name }}</span>
+              <span class="badge bg-primary rounded-pill">{{ stat.base_stat }}</span>
+            </li>
+          }
+        </ul>
+      </ion-card-content>
+    </ion-card>
+
+  } @else {
+    <div class="d-flex flex-column align-items-center justify-content-center mt-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-3">Loading...</p>
+    </div>
+  }
+
+  <!-- boton/cerrar -->
+  <ion-fab slot="fixed" vertical="top" horizontal="end">
+    <ion-fab-button color="medium" (click)="goBack()">
+      <ion-icon name="close-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
